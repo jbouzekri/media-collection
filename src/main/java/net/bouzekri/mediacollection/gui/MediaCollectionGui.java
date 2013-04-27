@@ -14,6 +14,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import net.bouzekri.mediacollection.DatabaseConnection;
+import net.bouzekri.mediacollection.tools.IntComparator;
 
 /**
  *
@@ -37,8 +38,9 @@ public class MediaCollectionGui extends javax.swing.JFrame {
     private void loadList() throws SQLException, Exception {
         currentListMedia = ListMediaFactory.getList(currentType);
 
-        DefaultTableModel tableModed = currentListMedia.load();
+        AbstractTableModel tableModed = currentListMedia.load();
         sorter = new TableRowSorter<AbstractTableModel>(tableModed);
+        //sorter.setComparator(0, new IntComparator());
         MediaListTable.setModel(tableModed);
         MediaListTable.setRowSorter(sorter);
     }
@@ -57,6 +59,7 @@ public class MediaCollectionGui extends javax.swing.JFrame {
     jPanel1 = new javax.swing.JPanel();
     jLabel1 = new javax.swing.JLabel();
     searchField = new javax.swing.JTextField();
+    addButton = new javax.swing.JButton();
     MenuBar = new javax.swing.JMenuBar();
     FileMenu = new javax.swing.JMenu();
     jMenuItem2 = new javax.swing.JMenuItem();
@@ -76,10 +79,7 @@ public class MediaCollectionGui extends javax.swing.JFrame {
 
     MediaListTable.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
-        {null, null, null, null},
-        {null, null, null, null},
-        {null, null, null, null},
-        {null, null, null, null}
+
       },
       new String [] {
         "Title 1", "Title 2", "Title 3", "Title 4"
@@ -96,21 +96,34 @@ public class MediaCollectionGui extends javax.swing.JFrame {
       }
     });
 
+    addButton.setText("Add");
+    addButton.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        addButtonMouseClicked(evt);
+      }
+    });
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jLabel1)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(searchField)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(jLabel1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(searchField))
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(addButton)
+            .addGap(0, 0, Short.MAX_VALUE)))
         .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
-        .addContainerGap()
+        .addComponent(addButton)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel1)
           .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -155,7 +168,7 @@ public class MediaCollectionGui extends javax.swing.JFrame {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(ListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE))
+        .addComponent(ListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
     );
 
     pack();
@@ -177,6 +190,15 @@ public class MediaCollectionGui extends javax.swing.JFrame {
     sorter.setRowFilter(rf);
   }//GEN-LAST:event_searchFieldActionPerformed
 
+  private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+    java.awt.EventQueue.invokeLater(new Runnable() {
+      public void run() {
+        currentListMedia.getAddGui().setVisible(true);
+      }
+    });
+  }//GEN-LAST:event_addButtonMouseClicked
+
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JMenu EditMenu;
   private javax.swing.JMenuItem EditPreferenceMenu;
@@ -186,6 +208,7 @@ public class MediaCollectionGui extends javax.swing.JFrame {
   private javax.swing.JTable MediaListTable;
   private javax.swing.JMenuBar MenuBar;
   private javax.swing.JMenu ViewMenu;
+  private javax.swing.JButton addButton;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JMenuItem jMenuItem1;
   private javax.swing.JMenuItem jMenuItem2;
