@@ -4,26 +4,30 @@
  */
 package net.bouzekri.mediacollection.gui;
 
-import net.bouzekri.mediacollection.gui.list.ListMediaFactory;
-import net.bouzekri.mediacollection.gui.list.ListMedia;
+import java.awt.Dialog;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.RowFilter;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import net.bouzekri.mediacollection.DatabaseConnection;
+import net.bouzekri.mediacollection.gui.list.ListMedia;
+import net.bouzekri.mediacollection.gui.list.ListMediaFactory;
+import net.bouzekri.mediacollection.gui.list.MediaTableModel;
 import net.bouzekri.mediacollection.tools.IntComparator;
 
 /**
  *
  * @author jobou
  */
-public class MediaCollectionGui extends javax.swing.JFrame {
+public class MediaCollectionGui extends JFrame {
 
-    ListMedia currentListMedia;
-    TableRowSorter<AbstractTableModel> sorter;
+    public MediaTableModel tableModel;
+    public ListMedia currentListMedia;
+
+    private TableRowSorter<AbstractTableModel> sorter;
 
     int currentType = ListMediaFactory.BOOK_LIST;
 
@@ -38,10 +42,10 @@ public class MediaCollectionGui extends javax.swing.JFrame {
     private void loadList() throws SQLException, Exception {
         currentListMedia = ListMediaFactory.getList(currentType);
 
-        AbstractTableModel tableModed = currentListMedia.load();
-        sorter = new TableRowSorter<AbstractTableModel>(tableModed);
-        //sorter.setComparator(0, new IntComparator());
-        MediaListTable.setModel(tableModed);
+        tableModel = currentListMedia.load();
+        sorter = new TableRowSorter<AbstractTableModel>(tableModel);
+        sorter.setComparator(0, new IntComparator());
+        MediaListTable.setModel(tableModel);
         MediaListTable.setRowSorter(sorter);
     }
 
@@ -191,11 +195,8 @@ public class MediaCollectionGui extends javax.swing.JFrame {
   }//GEN-LAST:event_searchFieldActionPerformed
 
   private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
-    java.awt.EventQueue.invokeLater(new Runnable() {
-      public void run() {
-        currentListMedia.getAddGui().setVisible(true);
-      }
-    });
+        Dialog dialog = currentListMedia.getModifyDialog(this, false);
+        dialog.setVisible(true);
   }//GEN-LAST:event_addButtonMouseClicked
 
 
@@ -205,7 +206,7 @@ public class MediaCollectionGui extends javax.swing.JFrame {
   private javax.swing.JMenu FileMenu;
   private javax.swing.JMenu HelpMenu;
   private javax.swing.JScrollPane ListScrollPane;
-  private javax.swing.JTable MediaListTable;
+  public javax.swing.JTable MediaListTable;
   private javax.swing.JMenuBar MenuBar;
   private javax.swing.JMenu ViewMenu;
   private javax.swing.JButton addButton;

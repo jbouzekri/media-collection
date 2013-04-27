@@ -5,8 +5,9 @@
 package net.bouzekri.mediacollection.model;
 
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Vector;
+import net.bouzekri.mediacollection.dao.MediaDao;
 
 /**
  *
@@ -14,8 +15,8 @@ import java.util.Vector;
  */
 public abstract class Media extends Object {
 
-      public Vector toTableRow(ArrayList<String> enabledColumns) {
-        Vector rowVector = new Vector();
+      public Object[] toTableRow(ArrayList<String> enabledColumns) {
+        Object[] row = new Object[enabledColumns.size()];
 
         Class<?> reflectionClass = this.getClass();
 
@@ -23,12 +24,14 @@ public abstract class Media extends Object {
             try {
               Field reflectionField = reflectionClass.getDeclaredField(enabledColumns.get(i));
               reflectionField.setAccessible(true);
-              rowVector.addElement(reflectionField.get(this));
+              row[i] = reflectionField.get(this);
             } catch(Exception e) {
-              rowVector.addElement("");
+              row[i] = "";
             }
           }
 
-        return rowVector;
+        return row;
     }
+
+    public abstract MediaDao getDao() throws SQLException;
 }

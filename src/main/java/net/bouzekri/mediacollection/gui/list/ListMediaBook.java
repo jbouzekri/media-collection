@@ -7,14 +7,14 @@ package net.bouzekri.mediacollection.gui.list;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
+import java.awt.Dialog;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import net.bouzekri.mediacollection.DatabaseConnection;
-import net.bouzekri.mediacollection.gui.AddBookGui;
+import net.bouzekri.mediacollection.gui.dialog.BookDialog;
 import net.bouzekri.mediacollection.model.Book;
 import net.bouzekri.mediacollection.model.Media;
 
@@ -57,7 +57,7 @@ public class ListMediaBook extends ListMedia {
     }
 
   @Override
-  public JFrame getAddGui() {
-    return new AddBookGui();
+  public Dialog getModifyDialog(java.awt.Frame parent, boolean modal) {
+    return new BookDialog(parent, modal);
   }
 }

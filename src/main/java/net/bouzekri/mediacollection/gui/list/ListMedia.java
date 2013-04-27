@@ -4,10 +4,9 @@
  */
 package net.bouzekri.mediacollection.gui.list;
 
+import java.awt.Dialog;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.table.AbstractTableModel;
 import net.bouzekri.mediacollection.model.Media;
 
 /**
@@ -22,7 +21,7 @@ public abstract class ListMedia {
     ArrayList<String> enabledColumn = new ArrayList<String>();
 
 
-    public AbstractTableModel load() {
+    public MediaTableModel load() {
         MediaTableModel tableModel = new MediaTableModel();
         for (int i = 0; i < this.getEnabledColumns().size(); i++) {
             tableModel.addColumn(getEnabledColumns().get(i));
@@ -53,5 +52,5 @@ public abstract class ListMedia {
 
     public abstract int[] getFilterColumn();
 
-    public abstract JFrame getAddGui();
+    public abstract Dialog getModifyDialog(java.awt.Frame parent, boolean modal);
 }
