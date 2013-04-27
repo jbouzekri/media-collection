@@ -3,7 +3,6 @@ package net.bouzekri.mediacollection.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
-import java.util.Vector;
 import net.bouzekri.mediacollection.dao.impl.BookDaoImpl;
 
 /**
@@ -118,13 +117,5 @@ public class Book extends Media {
     }
     public void setCover(String cover) {
         this.cover = cover;
-    }
-
-    public Vector toTableRow() {
-        Vector bookVector = new Vector();
-        bookVector.addElement(this.getId());
-        bookVector.addElement(this.getTitle());
-        bookVector.addElement(this.getAuthor());
-        return bookVector;
     }
 }

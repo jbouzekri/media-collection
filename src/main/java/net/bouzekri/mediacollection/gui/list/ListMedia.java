@@ -5,7 +5,10 @@
 package net.bouzekri.mediacollection.gui.list;
 
 import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.table.AbstractTableModel;
+import net.bouzekri.mediacollection.model.Media;
 
 /**
  *
@@ -13,14 +16,26 @@ import javax.swing.table.DefaultTableModel;
  */
 public abstract class ListMedia {
 
-    ArrayList<String> availableColumn = new ArrayList<String>();
+    List<Media> itemList = new ArrayList<Media>();
 
-    public DefaultTableModel load() {
-        return new DefaultTableModel();
+    ArrayList<String> availableColumn = new ArrayList<String>();
+    ArrayList<String> enabledColumn = new ArrayList<String>();
+
+
+    public AbstractTableModel load() {
+        MediaTableModel tableModel = new MediaTableModel();
+        for (int i = 0; i < this.getEnabledColumns().size(); i++) {
+            tableModel.addColumn(getEnabledColumns().get(i));
+        }
+        for (int i = 0; i < itemList.size(); i++) {
+            tableModel.addRow(itemList.get(i).toTableRow(this.getEnabledColumns()));
+        }
+
+        return tableModel;
     }
 
-    public Object getListElement(int index) {
-        return null;
+    public Media getListElement(int index) {
+        return itemList.get(index);
     }
 
     public ArrayList<String> getAvailableColumns() {
@@ -32,5 +47,11 @@ public abstract class ListMedia {
 
     public abstract void setAvailableColumns();
 
+    public ArrayList<String> getEnabledColumns() {
+      return this.getAvailableColumns();
+    }
+
     public abstract int[] getFilterColumn();
+
+    public abstract JFrame getAddGui();
 }
