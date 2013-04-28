@@ -195,8 +195,13 @@ public class MediaCollectionGui extends JFrame {
   }//GEN-LAST:event_searchFieldActionPerformed
 
   private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
-        Dialog dialog = currentListMedia.getModifyDialog(this, false);
-        dialog.setVisible(true);
+        final MediaCollectionGui thisFrame = this;
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Dialog dialog = currentListMedia.getModifyDialog(thisFrame, false);
+                dialog.setVisible(true);
+            }
+        });
   }//GEN-LAST:event_addButtonMouseClicked
 
 
