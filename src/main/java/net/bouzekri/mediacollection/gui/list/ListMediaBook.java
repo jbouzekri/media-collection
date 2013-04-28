@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
 import net.bouzekri.mediacollection.DatabaseConnection;
+import net.bouzekri.mediacollection.gui.detail.BookDetail;
+import net.bouzekri.mediacollection.gui.detail.MediaDetail;
 import net.bouzekri.mediacollection.gui.dialog.BookDialog;
 import net.bouzekri.mediacollection.model.Book;
 import net.bouzekri.mediacollection.model.Media;
@@ -59,5 +62,15 @@ public class ListMediaBook extends ListMedia {
   @Override
   public Dialog getModifyDialog(java.awt.Frame parent, boolean modal) {
     return new BookDialog(parent, modal);
+  }
+
+  @Override
+  public MediaDetail getDetailPanel(JPanel detailPanel) {
+    if (this.detailPanel == null) {
+      this.detailPanel = new BookDetail();
+      this.detailPanel.setPanel(detailPanel);
+    }
+
+    return this.detailPanel;
   }
 }

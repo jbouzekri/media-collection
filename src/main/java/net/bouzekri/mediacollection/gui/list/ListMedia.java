@@ -7,6 +7,8 @@ package net.bouzekri.mediacollection.gui.list;
 import java.awt.Dialog;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JPanel;
+import net.bouzekri.mediacollection.gui.detail.MediaDetail;
 import net.bouzekri.mediacollection.model.Media;
 
 /**
@@ -20,6 +22,7 @@ public abstract class ListMedia {
     ArrayList<String> availableColumn = new ArrayList<String>();
     ArrayList<String> enabledColumn = new ArrayList<String>();
 
+    MediaDetail detailPanel = null;
 
     public MediaTableModel load() {
         MediaTableModel tableModel = new MediaTableModel();
@@ -53,4 +56,6 @@ public abstract class ListMedia {
     public abstract int[] getFilterColumn();
 
     public abstract Dialog getModifyDialog(java.awt.Frame parent, boolean modal);
+
+    public abstract MediaDetail getDetailPanel(JPanel detailPanel);
 }

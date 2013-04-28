@@ -43,11 +43,11 @@ public class MediaCollectionGui extends JFrame {
      */
     public MediaCollectionGui() throws SQLException, Exception {
         initComponents();
+        defaultDetailPaneOnLoadVisibility(false);
         loadList();
-        detailPaneOnLoadVisibility(false);
     }
 
-    private void detailPaneOnLoadVisibility(boolean visible) {
+    private void defaultDetailPaneOnLoadVisibility(boolean visible) {
       coverLabel.setVisible(visible);
       detailScrollPane.setVisible(visible);
     }
@@ -67,6 +67,9 @@ public class MediaCollectionGui extends JFrame {
                 rowInListSelected(e);
             }
         });
+
+        // Load right component for items in list
+        currentListMedia.getDetailPanel(detailPanel).initComponents();
     }
 
     /**
@@ -329,19 +332,12 @@ public class MediaCollectionGui extends JFrame {
 
         ListSelectionModel lsm = (ListSelectionModel)e.getSource();
         if (lsm.isSelectionEmpty()) {
-            detailPaneOnLoadVisibility(false);
+            currentListMedia.getDetailPanel(detailPanel).detailPaneVisibility(false);
         } else {
             int selectedRow = lsm.getMinSelectionIndex();
-            Integer id = (Integer) MediaListTable.getModel().getValueAt(selectedRow, 0);
-            ConnectionSource connection = DatabaseConnection.getInstance().getConnectionSource();
-            try {
-              BookDaoImpl dao = DaoManager.createDao(connection, Book.class);
-              Book bookItem = dao.queryForId(id);
-              authorValueLabel.setText(bookItem.getAuthor());
-              detailPaneOnLoadVisibility(true);
-            } catch (SQLException ex) {
-              Logger.getLogger(MediaCollectionGui.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Integer selectedItemId = (Integer) MediaListTable.getModel().getValueAt(selectedRow, 0);
+            currentListMedia.getDetailPanel(detailPanel).loadItemForId(selectedItemId);
+            currentListMedia.getDetailPanel(detailPanel).detailPaneVisibility(true);
         }
   }
 
