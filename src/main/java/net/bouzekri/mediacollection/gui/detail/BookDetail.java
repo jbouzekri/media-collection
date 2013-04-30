@@ -9,10 +9,12 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import net.bouzekri.mediacollection.AppResourceBundle;
 import net.bouzekri.mediacollection.DatabaseConnection;
 import net.bouzekri.mediacollection.dao.impl.BookDaoImpl;
+import net.bouzekri.mediacollection.exception.MediaImageNotFoundException;
 import net.bouzekri.mediacollection.gui.MediaCollectionGui;
 import net.bouzekri.mediacollection.model.Book;
 import org.apache.commons.lang.StringUtils;
@@ -42,17 +44,12 @@ public class BookDetail extends MediaDetail {
   @Override
   public void loadItemForId(Integer id) {
     ConnectionSource connection = DatabaseConnection.getInstance().getConnectionSource();
+
     try {
       BookDaoImpl dao = DaoManager.createDao(connection, Book.class);
       Book bookItem = dao.queryForId(id);
-      authorValueLabel.setText(bookItem.getAuthor());
-      titleValueLabel.setText(bookItem.getTitle());
-      serieValueLabel.setText(bookItem.getDisplayedSerie());
-      detailPaneVisibility(true);
 
-      if (StringUtils.isBlank(bookItem.getCover())) {
-        this.detailPaneImageVisibility(false);
-      }
+      this.printDetailInPanel(bookItem);
 
     } catch (SQLException ex) {
       Logger.getLogger(MediaCollectionGui.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,6 +63,28 @@ public class BookDetail extends MediaDetail {
 
   public void detailPaneImageVisibility(boolean visible) {
     coverLabel.setVisible(false);
+  }
+
+  public void printDetailInPanel(Book book) {
+    authorValueLabel.setText(book.getAuthor());
+    titleValueLabel.setText(book.getTitle());
+    serieValueLabel.setText(book.getDisplayedSerie());
+    detailPaneVisibility(true);
+
+    if (StringUtils.isNotBlank(book.getCover())) {
+
+      ImageIcon image = new ImageIcon(book.getCover());
+
+      try {
+        coverLabel.setIcon(this.getScaledImage(image));
+      } catch (MediaImageNotFoundException ex) {
+        Logger.getLogger(BookDetail.class.getName()).log(Level.SEVERE, ex.getMessage());
+      }
+
+      coverLabel.setText("");
+    } else {
+      this.detailPaneImageVisibility(false);
+    }
   }
 
   @Override
