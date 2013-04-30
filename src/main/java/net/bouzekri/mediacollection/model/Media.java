@@ -35,8 +35,7 @@ public abstract class Media extends Object {
             Field reflectionField = reflectionClass.getDeclaredField(enabledColumns.get(i));
             reflectionField.setAccessible(true);
             row[i] = reflectionField.get(this);
-          } catch(Exception e) {
-            Logger.getLogger(Media.class.getName()).log(Level.SEVERE, null, e);
+          } catch (Exception e) {
             fieldFound = false;
           }
 
@@ -47,7 +46,6 @@ public abstract class Media extends Object {
               row[i] = reflectionMethod.invoke(this);
             }
           } catch(Exception e) {
-            Logger.getLogger(Media.class.getName()).log(Level.SEVERE, null, e);
             methodFound = false;
           }
 

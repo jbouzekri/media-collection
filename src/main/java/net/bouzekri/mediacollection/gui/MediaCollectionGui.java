@@ -132,14 +132,14 @@ public class MediaCollectionGui extends JFrame {
       }
     });
 
-    addButton.setText("Add");
+    addButton.setText(AppResourceBundle.getInstance().getString("add"));
     addButton.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseClicked(java.awt.event.MouseEvent evt) {
         addButtonMouseClicked(evt);
       }
     });
 
-    addByCodeButton.setText("Add By Code");
+    addByCodeButton.setText(AppResourceBundle.getInstance().getString("add_by_code"));
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);

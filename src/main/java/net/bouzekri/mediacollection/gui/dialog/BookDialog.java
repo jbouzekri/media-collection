@@ -7,6 +7,7 @@ package net.bouzekri.mediacollection.gui.dialog;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.bouzekri.mediacollection.AppResourceBundle;
 import net.bouzekri.mediacollection.gui.MediaCollectionGui;
 import net.bouzekri.mediacollection.model.Book;
 
@@ -50,15 +51,15 @@ public class BookDialog extends javax.swing.JDialog {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-    numLabel.setText("num");
+    numLabel.setText(AppResourceBundle.getInstance().getString("col_ListMediaBook_number"));
 
-    titleLabel.setText("Title");
+    titleLabel.setText(AppResourceBundle.getInstance().getString("col_ListMediaBook_title"));
 
-    jLabel1.setText("Author");
+    jLabel1.setText(AppResourceBundle.getInstance().getString("col_ListMediaBook_author"));
 
     serieField.setToolTipText("");
 
-    serieLabel.setText("Serie");
+    serieLabel.setText(AppResourceBundle.getInstance().getString("col_ListMediaBook_serie"));
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
@@ -73,7 +74,7 @@ public class BookDialog extends javax.swing.JDialog {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addComponent(serieField, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+            .addComponent(serieField, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(numLabel)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -102,14 +103,14 @@ public class BookDialog extends javax.swing.JDialog {
         .addContainerGap())
     );
 
-    addButton.setText("Add");
+    addButton.setText(AppResourceBundle.getInstance().getString("add"));
     addButton.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         addButtonActionPerformed(evt);
       }
     });
 
-    closeButton.setText("Close");
+    closeButton.setText(AppResourceBundle.getInstance().getString("close"));
     closeButton.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         closeButtonActionPerformed(evt);
