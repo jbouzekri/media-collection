@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import net.bouzekri.mediacollection.AppResourceBundle;
 import net.bouzekri.mediacollection.DatabaseConnection;
 import net.bouzekri.mediacollection.dao.impl.BookDaoImpl;
 import net.bouzekri.mediacollection.gui.MediaCollectionGui;
@@ -70,7 +71,7 @@ public class BookDetail extends MediaDetail {
     serieValueLabel = new javax.swing.JLabel();
 
     coverLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    coverLabel.setText("Cover");
+    coverLabel.setText(AppResourceBundle.getInstance().getString("col_ListMediaBook_cover"));
     coverLabel.setToolTipText("");
     coverLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
@@ -78,15 +79,15 @@ public class BookDetail extends MediaDetail {
 
     detailInScrollPanel.setPreferredSize(new java.awt.Dimension(100, 100));
 
-    authorLabel.setText("Author");
+    authorLabel.setText(AppResourceBundle.getInstance().getString("col_ListMediaBook_author"));
 
     authorValueLabel.setText("Author name 2");
 
-    titleLabel.setText("Title");
+    titleLabel.setText(AppResourceBundle.getInstance().getString("col_ListMediaBook_title"));
 
     titleValueLabel.setText("Title name");
 
-    serieLabel.setText("Serie");
+    serieLabel.setText(AppResourceBundle.getInstance().getString("col_ListMediaBook_displayed_serie"));
 
     serieValueLabel.setText("Serie name");
 
