@@ -4,8 +4,6 @@
  */
 package net.bouzekri.mediacollection.gui;
 
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.support.ConnectionSource;
 import java.awt.Dialog;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -17,12 +15,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
+import net.bouzekri.mediacollection.AppResourceBundle;
 import net.bouzekri.mediacollection.DatabaseConnection;
-import net.bouzekri.mediacollection.dao.impl.BookDaoImpl;
 import net.bouzekri.mediacollection.gui.list.ListMedia;
 import net.bouzekri.mediacollection.gui.list.ListMediaFactory;
 import net.bouzekri.mediacollection.gui.list.MediaTableModel;
-import net.bouzekri.mediacollection.model.Book;
 import net.bouzekri.mediacollection.tools.IntComparator;
 
 /**
@@ -127,9 +124,8 @@ public class MediaCollectionGui extends JFrame {
     MediaListTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     ListScrollPane.setViewportView(MediaListTable);
 
-    jLabel1.setText("Filter");
+    jLabel1.setText(AppResourceBundle.getInstance().getString("filter"));
 
-    searchField.setText("jTextField1");
     searchField.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         searchFieldActionPerformed(evt);

@@ -8,6 +8,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.bouzekri.mediacollection.DatabaseConnection;
 import net.bouzekri.mediacollection.dao.MediaDao;
 import net.bouzekri.mediacollection.tools.StringTools;
 
@@ -33,17 +36,18 @@ public abstract class Media extends Object {
             reflectionField.setAccessible(true);
             row[i] = reflectionField.get(this);
           } catch(Exception e) {
+            Logger.getLogger(Media.class.getName()).log(Level.SEVERE, null, e);
             fieldFound = false;
           }
 
           try {
             if (!fieldFound) {
-              System.out.println(enabledColumns.get(i));
               Method reflectionMethod = reflectionClass.getDeclaredMethod("get"+StringTools.camelize(enabledColumns.get(i)));
               reflectionMethod.setAccessible(true);
               row[i] = reflectionMethod.invoke(this);
             }
           } catch(Exception e) {
+            Logger.getLogger(Media.class.getName()).log(Level.SEVERE, null, e);
             methodFound = false;
           }
 

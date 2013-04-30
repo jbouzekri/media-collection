@@ -8,6 +8,7 @@ import java.awt.Dialog;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+import net.bouzekri.mediacollection.AppResourceBundle;
 import net.bouzekri.mediacollection.gui.detail.MediaDetail;
 import net.bouzekri.mediacollection.model.Media;
 
@@ -27,7 +28,7 @@ public abstract class ListMedia {
     public MediaTableModel load() {
         MediaTableModel tableModel = new MediaTableModel();
         for (int i = 0; i < this.getEnabledColumns().size(); i++) {
-            tableModel.addColumn(getEnabledColumns().get(i));
+            tableModel.addColumn(AppResourceBundle.getInstance().getString("col_"+this.getClass().getSimpleName()+"_"+getEnabledColumns().get(i)));
         }
         for (int i = 0; i < itemList.size(); i++) {
             tableModel.addRow(itemList.get(i).toTableRow(this.getEnabledColumns()));
