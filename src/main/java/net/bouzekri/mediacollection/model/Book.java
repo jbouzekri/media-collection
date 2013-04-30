@@ -69,10 +69,10 @@ public class Book extends Media {
         this.author = author;
     }
 
-    public int getDate() {
+    public Integer getDate() {
         return date;
     }
-    public void setDate(int date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 
@@ -88,10 +88,10 @@ public class Book extends Media {
         this.serie = serie;
     }
 
-    public int getNumber() {
-        return number;
+    public Integer getNumber() {
+        return this.number;
     }
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -102,17 +102,17 @@ public class Book extends Media {
         this.isbn = isbn;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
-    public int getPublished() {
+    public Integer getPublished() {
         return published;
     }
-    public void setPublished(int published) {
+    public void setPublished(Integer published) {
         this.published = published;
     }
 
@@ -127,6 +127,10 @@ public class Book extends Media {
     public BookDaoImpl getDao() throws SQLException {
       ConnectionSource connection = DatabaseConnection.getInstance().getConnectionSource();
       return DaoManager.createDao(connection, Book.class);
+    }
+
+    public String displayedSerie() {
+      return this.getSerie()+" ["+Integer.toString(this.getNumber())+"]";
     }
 
 }
