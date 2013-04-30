@@ -87,6 +87,7 @@ public class MediaCollectionGui extends JFrame {
     jLabel1 = new javax.swing.JLabel();
     searchField = new javax.swing.JTextField();
     addButton = new javax.swing.JButton();
+    addByCodeButton = new javax.swing.JButton();
     detailPanel = new javax.swing.JPanel();
     coverLabel = new javax.swing.JLabel();
     detailScrollPane = new javax.swing.JScrollPane();
@@ -142,6 +143,8 @@ public class MediaCollectionGui extends JFrame {
       }
     });
 
+    addByCodeButton.setText("Add By Code");
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -155,13 +158,17 @@ public class MediaCollectionGui extends JFrame {
             .addComponent(searchField))
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addComponent(addButton)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(addByCodeButton)
             .addGap(0, 0, Short.MAX_VALUE)))
         .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
-        .addComponent(addButton)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(addButton)
+          .addComponent(addByCodeButton))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel1)
@@ -351,6 +358,7 @@ public class MediaCollectionGui extends JFrame {
   private javax.swing.JMenuBar MenuBar;
   private javax.swing.JMenu ViewMenu;
   private javax.swing.JButton addButton;
+  protected javax.swing.JButton addByCodeButton;
   protected javax.swing.JLabel authorLabel;
   protected javax.swing.JLabel authorValueLabel;
   protected javax.swing.JLabel coverLabel;
