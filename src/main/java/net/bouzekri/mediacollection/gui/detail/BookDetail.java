@@ -45,7 +45,7 @@ public class BookDetail extends MediaDetail {
       Book bookItem = dao.queryForId(id);
       authorValueLabel.setText(bookItem.getAuthor());
       titleValueLabel.setText(bookItem.getTitle());
-      serieValueLabel.setText(bookItem.displayedSerie());
+      serieValueLabel.setText(bookItem.getDisplayedSerie());
       detailPaneVisibility(true);
     } catch (SQLException ex) {
       Logger.getLogger(MediaCollectionGui.class.getName()).log(Level.SEVERE, null, ex);

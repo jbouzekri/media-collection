@@ -129,7 +129,7 @@ public class Book extends Media {
       return DaoManager.createDao(connection, Book.class);
     }
 
-    public String displayedSerie() {
+    public String getDisplayedSerie() {
       return this.getSerie()+" ["+Integer.toString(this.getNumber())+"]";
     }
 

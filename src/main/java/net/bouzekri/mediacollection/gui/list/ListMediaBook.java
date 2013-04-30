@@ -38,13 +38,6 @@ public class ListMediaBook extends ListMedia {
           itemList = new ArrayList<Media>();
           Logger.getLogger(ListMedia.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-/*        Book book = new Book();
-        book.setTitle("My first book 23");
-        book.setDate();
-
-        // persist the account object to the database
-        bookDao.create(book);*/
     }
 
     @Override
@@ -52,6 +45,7 @@ public class ListMediaBook extends ListMedia {
         availableColumn.add("id");
         availableColumn.add("title");
         availableColumn.add("author");
+        availableColumn.add("displayed_serie");
     }
 
     @Override
