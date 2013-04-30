@@ -15,6 +15,7 @@ import net.bouzekri.mediacollection.DatabaseConnection;
 import net.bouzekri.mediacollection.dao.impl.BookDaoImpl;
 import net.bouzekri.mediacollection.gui.MediaCollectionGui;
 import net.bouzekri.mediacollection.model.Book;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -48,6 +49,11 @@ public class BookDetail extends MediaDetail {
       titleValueLabel.setText(bookItem.getTitle());
       serieValueLabel.setText(bookItem.getDisplayedSerie());
       detailPaneVisibility(true);
+
+      if (StringUtils.isBlank(bookItem.getCover())) {
+        this.detailPaneImageVisibility(false);
+      }
+
     } catch (SQLException ex) {
       Logger.getLogger(MediaCollectionGui.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -56,6 +62,10 @@ public class BookDetail extends MediaDetail {
   public void detailPaneVisibility(boolean visible) {
     coverLabel.setVisible(visible);
     detailScrollPane.setVisible(visible);
+  }
+
+  public void detailPaneImageVisibility(boolean visible) {
+    coverLabel.setVisible(false);
   }
 
   @Override

@@ -40,8 +40,8 @@ public class MediaCollectionGui extends JFrame {
      */
     public MediaCollectionGui() throws SQLException, Exception {
         initComponents();
-        defaultDetailPaneOnLoadVisibility(false);
         loadList();
+        defaultDetailPaneOnLoadVisibility(false);
     }
 
     private void defaultDetailPaneOnLoadVisibility(boolean visible) {
@@ -67,6 +67,7 @@ public class MediaCollectionGui extends JFrame {
 
         // Load right component for items in list
         currentListMedia.getDetailPanel(detailPanel).initComponents();
+        currentListMedia.getDetailPanel(detailPanel).detailPaneVisibility(false);
     }
 
     /**
@@ -106,7 +107,6 @@ public class MediaCollectionGui extends JFrame {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("My Media Collection");
-    setPreferredSize(new java.awt.Dimension(900, 500));
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosed(java.awt.event.WindowEvent evt) {
         appClosed(evt);
@@ -340,7 +340,6 @@ public class MediaCollectionGui extends JFrame {
             int selectedRow = lsm.getMinSelectionIndex();
             Integer selectedItemId = (Integer) MediaListTable.getModel().getValueAt(selectedRow, 0);
             currentListMedia.getDetailPanel(detailPanel).loadItemForId(selectedItemId);
-            currentListMedia.getDetailPanel(detailPanel).detailPaneVisibility(true);
         }
   }
 
