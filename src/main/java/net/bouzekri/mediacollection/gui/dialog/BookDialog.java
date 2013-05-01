@@ -7,8 +7,12 @@ package net.bouzekri.mediacollection.gui.dialog;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import net.bouzekri.mediacollection.AppResourceBundle;
+import net.bouzekri.mediacollection.exception.MediaImageNotFoundException;
 import net.bouzekri.mediacollection.gui.MediaCollectionGui;
+import net.bouzekri.mediacollection.gui.detail.MediaDetail;
 import net.bouzekri.mediacollection.model.Book;
 
 /**
@@ -18,6 +22,8 @@ import net.bouzekri.mediacollection.model.Book;
 public class BookDialog extends javax.swing.JDialog {
 
   public Book book = null;
+  private JFileChooser fc;
+  public String selectedCoverPath = null;
 
   /**
    * Creates new form BookDialog
@@ -25,8 +31,12 @@ public class BookDialog extends javax.swing.JDialog {
   public BookDialog(java.awt.Frame parent, boolean modal) {
     super(parent, modal);
     initComponents();
+    initCustomComponents();
   }
 
+  private void initCustomComponents() {
+    fc = new JFileChooser();
+  }
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,6 +55,12 @@ public class BookDialog extends javax.swing.JDialog {
     serieField = new javax.swing.JTextField();
     titleField = new javax.swing.JTextField();
     serieLabel = new javax.swing.JLabel();
+    isbnLabel = new javax.swing.JLabel();
+    isbnField = new javax.swing.JTextField();
+    publishedLabel = new javax.swing.JLabel();
+    publishedField = new javax.swing.JTextField();
+    coverLabel = new javax.swing.JLabel();
+    jButton1 = new javax.swing.JButton();
     jPanel2 = new javax.swing.JPanel();
     addButton = new javax.swing.JButton();
     closeButton = new javax.swing.JButton();
@@ -61,6 +77,19 @@ public class BookDialog extends javax.swing.JDialog {
 
     serieLabel.setText(AppResourceBundle.getInstance().getString("col_ListMediaBook_serie"));
 
+    isbnLabel.setText(AppResourceBundle.getInstance().getString("col_ListMediaBook_isbn"));
+
+    publishedLabel.setText(AppResourceBundle.getInstance().getString("col_ListMediaBook_published"));
+
+    coverLabel.setText(AppResourceBundle.getInstance().getString("book_nocover"));
+
+    jButton1.setText(AppResourceBundle.getInstance().getString("book_choose_a_file"));
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        chooseAfileAction(evt);
+      }
+    });
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -68,19 +97,34 @@ public class BookDialog extends javax.swing.JDialog {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(titleLabel)
-          .addComponent(jLabel1)
-          .addComponent(serieLabel))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addComponent(serieField, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(titleLabel)
+              .addComponent(jLabel1)
+              .addComponent(serieLabel))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(numLabel)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(serieField, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(numLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(numSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addComponent(titleField)
+              .addComponent(authorField)))
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(isbnLabel)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(numSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addComponent(titleField)
-          .addComponent(authorField))
+            .addComponent(isbnField))
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(publishedLabel)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(publishedField))
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(coverLabel)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jButton1)
+            .addGap(0, 0, Short.MAX_VALUE)))
         .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
@@ -100,7 +144,19 @@ public class BookDialog extends javax.swing.JDialog {
           .addComponent(numSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(serieField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(numLabel))
-        .addContainerGap())
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(isbnLabel)
+          .addComponent(isbnField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(publishedLabel)
+          .addComponent(publishedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jButton1)
+          .addComponent(coverLabel))
+        .addContainerGap(24, Short.MAX_VALUE))
     );
 
     addButton.setText(AppResourceBundle.getInstance().getString("add"));
@@ -126,7 +182,7 @@ public class BookDialog extends javax.swing.JDialog {
         .addComponent(addButton)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(closeButton)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addContainerGap(98, Short.MAX_VALUE))
     );
     jPanel2Layout.setVerticalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,10 +209,10 @@ public class BookDialog extends javax.swing.JDialog {
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addContainerGap())
     );
 
     pack();
@@ -171,12 +227,15 @@ public class BookDialog extends javax.swing.JDialog {
     this.book.setSerie(serieField.getText());
     this.book.setNumber((Integer) numSpinner.getValue());
     this.book.setDate();
+    this.book.setIsbn(isbnField.getText());
+    this.book.setPublished(new Integer(publishedField.getText()));
+    
+    try {
+      this.book.getDao().createOrUpdate(this.book);
+    } catch (SQLException ex) {
+      Logger.getLogger(BookDialog.class.getName()).log(Level.SEVERE, null, ex);
+    }
 
-      try {
-        this.book.getDao().createOrUpdate(this.book);
-      } catch (SQLException ex) {
-        Logger.getLogger(BookDialog.class.getName()).log(Level.SEVERE, null, ex);
-      }
     MediaCollectionGui parentFrame = (MediaCollectionGui) this.getParent();
     parentFrame.tableModel.addRow(this.book.toTableRow(parentFrame.currentListMedia.getEnabledColumns()));
     parentFrame.tableModel.fireTableDataChanged();
@@ -187,15 +246,37 @@ public class BookDialog extends javax.swing.JDialog {
     this.dispose();
   }//GEN-LAST:event_closeButtonActionPerformed
 
+  private void chooseAfileAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseAfileAction
+    int returnVal = fc.showOpenDialog(BookDialog.this);
+
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+        selectedCoverPath = fc.getSelectedFile().getPath();
+        if (selectedCoverPath != null) {
+            ImageIcon imageIcon = new ImageIcon(selectedCoverPath);
+            try {
+              coverLabel.setIcon(MediaDetail.getScaledImage(imageIcon));
+            } catch (MediaImageNotFoundException ex) {
+              Logger.getLogger(BookDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+  }//GEN-LAST:event_chooseAfileAction
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton addButton;
   private javax.swing.JTextField authorField;
   private javax.swing.JButton closeButton;
+  protected javax.swing.JLabel coverLabel;
+  protected javax.swing.JTextField isbnField;
+  protected javax.swing.JLabel isbnLabel;
+  private javax.swing.JButton jButton1;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JPanel jPanel2;
   private javax.swing.JLabel numLabel;
   private javax.swing.JSpinner numSpinner;
+  protected javax.swing.JTextField publishedField;
+  protected javax.swing.JLabel publishedLabel;
   private javax.swing.JTextField serieField;
   private javax.swing.JLabel serieLabel;
   private javax.swing.JTextField titleField;

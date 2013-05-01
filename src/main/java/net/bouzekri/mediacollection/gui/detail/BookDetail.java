@@ -76,7 +76,7 @@ public class BookDetail extends MediaDetail {
       ImageIcon image = new ImageIcon(book.getCover());
 
       try {
-        coverLabel.setIcon(this.getScaledImage(image));
+        coverLabel.setIcon(MediaDetail.getScaledImage(image));
       } catch (MediaImageNotFoundException ex) {
         Logger.getLogger(BookDetail.class.getName()).log(Level.SEVERE, ex.getMessage());
       }

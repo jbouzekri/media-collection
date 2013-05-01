@@ -28,7 +28,7 @@ public abstract class MediaDetail {
 
   public abstract void detailPaneVisibility(boolean visible);
 
-  public ImageIcon getScaledImage(ImageIcon image) throws MediaImageNotFoundException {
+  public static ImageIcon getScaledImage(ImageIcon image) throws MediaImageNotFoundException {
     if (image.getIconWidth() == -1 || image.getIconHeight() == -1) {
       throw new MediaImageNotFoundException(image.toString()+" not found or is not an image");
     }
